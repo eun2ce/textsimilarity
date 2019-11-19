@@ -10,3 +10,5 @@ require (
 	github.com/klauspost/cpuid v0.0.0-20180405133222-e7e905edc00e // indirect
 	golang.org/x/text v0.3.0 // indirect
 )
+
+go 1.13

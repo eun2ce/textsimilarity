@@ -46,18 +46,13 @@ func Cosine(a, b []float64) (float64, error) {
 	s1 := 0.0
 	s2 := 0.0
 	for k := 0; k < count; k++ {
-        if math.IsNaN(a[k]) || math.IsNaN(b[k]) {
-            // debug errors.New("[IsNaN]", "a", a[k],"b", b[k])
-            break
+        if math.IsNaN(a[k]) && math.IsInf(b[k], 0) {
+            a[k] = float64(0)
+            b[k] = float64(1)
+            continue
         }
-        
-        if math.IsInf(a[k], 0) || math.IsInf(b[k], 0) {
-            // fmt.Println("[IsInf]", "a", a[k],"b", b[k])
-            break
-        }
-
 		if k >= lengthA {
-			s2 += math.Pow(b[k], 2)
+                s2 += math.Pow(b[k], 2)
 			continue
 		}
 		if k >= lengthB {
@@ -67,7 +62,7 @@ func Cosine(a, b []float64) (float64, error) {
 		sumA += a[k] * b[k]
 		s1 += math.Pow(a[k], 2)
 		s2 += math.Pow(b[k], 2)
-	}
+    }
 	if s1 == 0 || s2 == 0 {
 		return 0.0, errors.New("null vector")
 	}
